@@ -1,3 +1,8 @@
+Fork of JesseCake/RPi_Triggered_video_player (https://github.com/JesseCake/RPi_Triggered_video_player)
+
+Added 10 more Videos and random playback of them. startvideo will launch between.
+
+
 A Raspberry Pi Video content triggered looper/logic set of players for artists
 (Loop, trigger, multi-play on multiple monitors, logic trigger, you name it!)
 
