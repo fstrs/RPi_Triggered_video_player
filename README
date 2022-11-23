@@ -4,6 +4,7 @@ Added 10 more Videos and random playback of them. startvideo will launch between
 Also added GPIO21 as shutdown-Button
 
 
+
 A Raspberry Pi Video content triggered looper/logic set of players for artists
 (Loop, trigger, multi-play on multiple monitors, logic trigger, you name it!)
 
