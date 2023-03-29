@@ -1,6 +1,6 @@
 Fork of JesseCake/RPi_Triggered_video_player (https://github.com/JesseCake/RPi_Triggered_video_player)
 
-Added 10 more Videos and random playback of them. startvideo will launch between.
+Added 10 more Videos and random playback for them. startvideo will launch between.
 Also added GPIO21 as shutdown-Button
 
 
