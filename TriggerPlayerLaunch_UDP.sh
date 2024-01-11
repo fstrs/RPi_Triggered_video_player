@@ -13,7 +13,10 @@ sleep 10
 chmod 666 /dev/tty1
 #disable console blinking cursor
 setterm -cursor off > /dev/tty1
+#mount usb to /mnt/usb0
+sudo mount /dev/sda1 /mnt/usb0
 #wipe out the screen (cleared, black), redirect output to null
 dd if=/dev/zero of=/dev/fb0 > /dev/null 2>&1
 #start main python script in background and redirect output to null
-python3 /home/pi/TriggeredVideoPlayer_NetworkUDP_v9.py > /dev/null 2>&1 &
+python3 /home/pi/TriggeredVideoPlayer_GPIO_v9.py > /dev/null 2>&1 &
+#python3 /home/pi/TriggeredVideoPlayer_GPIO_v9.py

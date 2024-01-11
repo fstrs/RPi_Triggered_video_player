@@ -76,19 +76,33 @@ gpiobounce = 100
 ###############################################################
 # file locations for media
 ###############################################################
-startmovie = ("/home/pi/video/start.mp4")
-movie1 = ("/home/pi/video/video1.mp4")
-movie2 = ("/home/pi/video/video2.mp4")
-movie3 = ("/home/pi/video/video3.mp4")
-movie4 = ("/home/pi/video/video4.mp4")
-movie5 = ("/home/pi/video/video5.mp4")
-movie6 = ("/home/pi/video/video6.mp4")
-movie7 = ("/home/pi/video/video7.mp4")
-movie8 = ("/home/pi/video/video8.mp4")
-movie9 = ("/home/pi/video/video9.mp4")
-movie10 = ("/home/pi/video/video10.mp4")
-movie11 = ("/home/pi/video/video11.mp4")
-movie12 = ("/home/pi/video/video12.mp4")
+# startmovie = ("/home/pi/video/start.mp4")
+# movie1 = ("/home/pi/video/video1.mp4")
+# movie2 = ("/home/pi/video/video2.mp4")
+# movie3 = ("/home/pi/video/video3.mp4")
+# movie4 = ("/home/pi/video/video4.mp4")
+# movie5 = ("/home/pi/video/video5.mp4")
+# movie6 = ("/home/pi/video/video6.mp4")
+# movie7 = ("/home/pi/video/video7.mp4")
+# movie8 = ("/home/pi/video/video8.mp4")
+# movie9 = ("/home/pi/video/video9.mp4")
+# movie10 = ("/home/pi/video/video10.mp4")
+# movie11 = ("/home/pi/video/video11.mp4")
+# movie12 = ("/home/pi/video/video12.mp4")
+
+startmovie = ("/mnt/usb0/video/start.mp4")
+movie1 = ("/mnt/usb0/video/video1.mp4")
+movie2 = ("/mnt/usb0/video/video2.mp4")
+movie3 = ("/mnt/usb0/video/video3.mp4")
+movie4 = ("/mnt/usb0/video/video4.mp4")
+movie5 = ("/mnt/usb0/video/video5.mp4")
+movie6 = ("/mnt/usb0/video/video6.mp4")
+movie7 = ("/mnt/usb0/video/video7.mp4")
+movie8 = ("/mnt/usb0/video/video8.mp4")
+movie9 = ("/mnt/usb0/video/video9.mp4")
+movie10 = ("/mnt/usb0/video/video10.mp4")
+movie11 = ("/mnt/usb0/video/video11.mp4")
+movie12 = ("/mnt/usb0/video/video12.mp4")
 
 ##################################################################
 #variables for making sure we only trigger each video player once:
@@ -99,6 +113,7 @@ mode = 0
 gpio1status = 0
 gpio2status = 0
 modenew = 0
+allplayed = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 ################################################################################
 #Redirecting console output to null so we don't litter the window with feedback
@@ -109,53 +124,53 @@ FNULL = open(os.devnull,'w')
 # threaded callbacks for interrupt driven button triggers
 # also: resets so buttons must be release and pressed to re-trigger
 #####################################################################
-def pressedgpio1(channel):
-    global needtostart
-    global mode
-    global gpio1status
-    #check that the button was previously release before re-triggering
-    #remember, voltage low (zero) means pressed, due to our pull-ups
-    if (gpio1status == 0 and GPIO.input(gpio1) == 0):
-        print("GPIO#1 triggered")
-        mode = 1
-        needtostart = 1
-        gpio1status = 1
-    #the button was previously pressed, but is now released, let's reset
-    #remember, voltage high (1) means released, due to our pull-ups
-    elif (gpio1status == 1 and GPIO.input(gpio1) == 1):
-        print("GPIO#1 released and reset")
-        gpio1status = 0
-    #button is still being held down from last time, do nothing
-    elif (gpio1status == 1 and GPIO.input(gpio1) == 0):
-        print("GPIO#1 still held down, not triggered")
+# def pressedgpio1(channel):
+#     global needtostart
+#     global mode
+#     global gpio1status
+#     #check that the button was previously release before re-triggering
+#     #remember, voltage low (zero) means pressed, due to our pull-ups
+#     if (gpio1status == 0 and GPIO.input(gpio1) == 0):
+#         print("GPIO#1 triggered")
+#         mode = 1
+#         needtostart = 1
+#         gpio1status = 1
+#     #the button was previously pressed, but is now released, let's reset
+#     #remember, voltage high (1) means released, due to our pull-ups
+#     elif (gpio1status == 1 and GPIO.input(gpio1) == 1):
+#         print("GPIO#1 released and reset")
+#         gpio1status = 0
+#     #button is still being held down from last time, do nothing
+#     elif (gpio1status == 1 and GPIO.input(gpio1) == 0):
+#         print("GPIO#1 still held down, not triggered")
 
-def pressedgpio2(channel):
-    global needtostart
-    global mode
-    global gpio2status
-    #check that the button was previously release before re-triggering
-    #remember, voltage low (zero) means pressed, due to our pull-ups
-    if (gpio2status == 0 and GPIO.input(gpio2) == 0):
-        print("GPIO#2 triggered")
-        mode = 2
-        needtostart = 1
-        gpio2status = 1
-    #the button was previously pressed, but is now released, let's reset
-    #remember, voltage high (1) means released, due to our pull-ups
-    elif (gpio2status == 1 and GPIO.input(gpio2) == 1):
-        print("GPIO#2 released and reset")
-        gpio2status = 0
-    #button is still being held down from last time, do nothing
-    elif (gpio2status == 1 and GPIO.input(gpio2) == 0):
-        print("GPIO#2 still held down, not triggered")
+# def pressedgpio2(channel):
+#     global needtostart
+#     global mode
+#     global gpio2status
+#     #check that the button was previously release before re-triggering
+#     #remember, voltage low (zero) means pressed, due to our pull-ups
+#     if (gpio2status == 0 and GPIO.input(gpio2) == 0):
+#         print("GPIO#2 triggered")
+#         mode = 2
+#         needtostart = 1
+#         gpio2status = 1
+#     #the button was previously pressed, but is now released, let's reset
+#     #remember, voltage high (1) means released, due to our pull-ups
+#     elif (gpio2status == 1 and GPIO.input(gpio2) == 1):
+#         print("GPIO#2 released and reset")
+#         gpio2status = 0
+#     #button is still being held down from last time, do nothing
+#     elif (gpio2status == 1 and GPIO.input(gpio2) == 0):
+#         print("GPIO#2 still held down, not triggered")
 
 #########################################################################
 # Definition of callback functions to physical button mapping
 #########################################################################
 #Interrupt driven callbacks with 100ms debounce in case of electrical noise
 #Short to ground to trigger, release to reset (rise/fall detected in callbacks):
-GPIO.add_event_detect(gpio1, GPIO.BOTH, callback=pressedgpio1, bouncetime=gpiobounce)
-GPIO.add_event_detect(gpio2, GPIO.BOTH, callback=pressedgpio2, bouncetime=gpiobounce)
+# GPIO.add_event_detect(gpio1, GPIO.BOTH, callback=pressedgpio1, bouncetime=gpiobounce)
+# GPIO.add_event_detect(gpio2, GPIO.BOTH, callback=pressedgpio2, bouncetime=gpiobounce)
 
 #########################################################################
 #Main looping
@@ -180,7 +195,11 @@ try:
 				#Check for end of video
 				if m.poll() is not None:
 					#Relaunch the process to start again
-					modenew = random.randint(1,12)
+					if allplayed == [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]:
+						allplayed = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+					modenew = (random.randint(1,12))
+					while allplayed[modenew] == 1:
+						modenew = (random.randint(1,12))
 					mode = modenew
 					print("modenew = " + str(modenew))
 					needtostart = 1
@@ -286,6 +305,7 @@ try:
 					needtostart = 1
 				#return back to start
 				if (needtostart == 1):
+					allplayed [0] = 1
 					mode = 0
 					a.kill()
 
@@ -388,6 +408,7 @@ try:
 					needtostart = 1
 				#return back to start
 				if (needtostart == 1):
+					allplayed[1] = 1
 					mode = 0
 					b.kill()
 
@@ -490,6 +511,7 @@ try:
 					needtostart = 1
 				#return back to start
 				if (needtostart == 1):
+					allplayed[2] = 1
 					mode = 0
 					c.kill()
 
@@ -592,6 +614,7 @@ try:
 					needtostart = 1
 				#return back to start
 				if (needtostart == 1):
+					allplayed[3] = 1
 					mode = 0
 					d.kill()
 
@@ -694,6 +717,7 @@ try:
 					needtostart = 1
 				#return back to start
 				if (needtostart == 1):
+					allplayed[4] = 1
 					mode = 0
 					e.kill()
 
@@ -796,6 +820,7 @@ try:
 					needtostart = 1
 				#return back to start
 				if (needtostart == 1):
+					allplayed[5] = 1
 					mode = 0
 					f.kill()
 
@@ -898,6 +923,7 @@ try:
 					needtostart = 1
 				#return back to start
 				if (needtostart == 1):
+					allplayed[6] = 1
 					mode = 0
 					g.kill()
 
@@ -1000,6 +1026,7 @@ try:
 					needtostart = 1
 				#return back to start
 				if (needtostart == 1):
+					allplayed[7] = 1
 					mode = 0
 					h.kill()
 
@@ -1102,6 +1129,7 @@ try:
 					needtostart = 1
 				#return back to start
 				if (needtostart == 1):
+					allplayed[8] = 1
 					mode = 0
 					i.kill()					
 
@@ -1204,6 +1232,7 @@ try:
 					needtostart = 1
 				#return back to start
 				if (needtostart == 1):
+					allplayed[9] = 1
 					mode = 0
 					j.kill()
 
@@ -1306,6 +1335,7 @@ try:
 					needtostart = 1
 				#return back to start
 				if (needtostart == 1):
+					allplayed[10] = 1
 					mode = 0
 					k.kill()
 
@@ -1408,11 +1438,15 @@ try:
 					needtostart = 1
 				#return back to start
 				if (needtostart == 1):
+					allplayed[11] = 1
 					mode = 0
 					l.kill()
 
 
 		#give the loop some breathing space (eases up on resources, but delays response by 100ms)
+		if allplayed == [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]:
+			allplayed = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+			
 		time.sleep(0.1)
 
 #when killed, get rid of players and any other stuff that needs doing
